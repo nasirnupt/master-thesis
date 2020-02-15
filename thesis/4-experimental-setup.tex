@@ -1,0 +1,176 @@
+\chapter{Experimental Setup}
+To answers the research questions that we rasied in chapter 1, we designed the relevant experiments to evaluate our assumption. This most experiments was conducted on our personal laptop. We conduct BERT training with 4 NVIDIA RTX 2080Ti. Here we illustrate how we design the exeriments for each reserach question.
+
+\section{Dataset}
+To evaluate our model and other baselines, we decide to adopt  PROMISE dataset. However, since it can not be access now, we use a website called way back machine to visited their history website, and then downloaded the defect dataset, base on each project name and its version, we found its source code. We dropped the file that can not be found base on the file name and path from defect data. The Table 3.1 shows the overveiw of dataset. And description of the data shown in Table 3.2
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c|c|c|c}
+    \toprule[2pt]
+        Project &  Verison & Average & Average(processed) & Defect rate \\
+    \toprule[1pt]
+        ant &  1.3 \sim 1.7 & 338 & 307 & 0.23 \\
+        camel &  1.2, 1.4, 1.6 & 815 & 367 & 0.45 \\
+        ivy &  1.1, 1.4 & 176 & 151 & 0.32 \\
+        jedit &  3.2.1 4.1 \sim 4.3 & 360 & 325 & 0.17 \\
+        lucene &  2.2, 2.4 & 293 & 265 & 0.62 \\
+        poi &  1.5, 2.0, 2.5 & 312 & 279 & 0.50 \\
+        synapse & 1.1, 1.2 & 239 & 212 & 0.33 \\
+        velocity &  1.4.1, 1.6.1 & 213 & 182 & 0.59 \\
+        xalan &  2.4 \sim 2.7 & 830 & 739 & 0.58 \\
+        xerces &  1.2.0, 1.3.0, 1.4.4 & 410 & 224 & 0.36 \\
+
+    \toprule[2pt]
+    \end{tabular}
+    \caption{Dataset Overview}
+    \label{tab:my_label}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c}
+    \toprule[2pt]
+        Columns & Description \\
+    \toprule[1pt]
+        \textit{LOC} & The number of methods in the class \\
+        \textit{DIT} & The position of the class in the inheritance tree \\
+        \textit{NOC} & The number of immediate descendants of the class\\
+        \textit{CBO} & \tabincell{c}{The value increases when the methods of \\ one class access services of another} \\
+        \textit{RFC} & \tabincell{c}{Number of methods invoked in response \\ to a message to the object} \\
+        \textit{LCOM} & \tabincell{c}{Number of pairs of methods that do not \\ share a reference to an instance variable} \\
+        \textit{LOCM3} & \tabincell{c}{If \textit{m,a} are the number of methods,attributes in a class number and \\ is the number of methods accessing an attribute, then locm3=} \\
+        \textit{NPM} & The number of all the methods in a class that are declared as public. \\
+        \textit{DAM} & \tabincell{c}{Ratio of the number of private (proteced) \\ attributes to the tatal number of attributes.} \\
+        \textit{MOA} & \tabincell{c}{The number of data declarations (class fields) \\ whose types are user defined classes.} \\
+        \textit{MFA} & \tabincell{c}{Number of methods inherited by a class plus \\ number of methods accessible by member methods of the class.} \\
+        \textit{CAM} & \tabincell{c}{Summation of number of different types of \\ method parameters in every method divided by a multiplication of number \\ of different method parameter types in whole class and number of methods} \\
+        \textit{IC} & The number of parent classes to which a given class is coupled. \\
+        \textit{CBM} & \tabincell{c}{Total number of new/redefined methods to \\ which all the inherited methods are copuled} \\
+        \textit{AMC} & The number of JAVA byte codes. \\
+        \textit{Ca} & How many other classes use the specific class. \\
+        \textit{Ce} & \tabincell{c}{Maximum McCabe's Cyclomatic Complexity \\ values of methods in the same class.} \\
+        \textit{Max(CC)} & \tabincell{c}{Maximum McCabe's Cyclomatic Complextity \\ values of methods in the same class.} \\
+        \textit{Avg(CC)} & \tabincell{c}{Average McCabe's Cyclomatic Complextity \\ values of methods in the same class.} \\
+        \textit{LOC} & Measures the volume of code. \\
+    \toprule[2pt]
+    \end{tabular}
+    \caption{Dataset Overview}
+    \label{tab:my_label}
+\end{table}
+
+\section{Corpus Pretraining}
+To evaluate our model with other deep learning baselines, it is necessary to pretrain a language model for those deep learning model. On the other hand, Since there no pretrained model for source code, especially Java code. Thereby, we pretrained mini version of BERT to statisfy our requirement. 
+
+\subsection{Corpus}
+To train a language model, we adopt the part of \textbf{BigCode} \cite{allamanis2018survey}, to genereated the corpus we need. Here is description of the our processed corpus.
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|c|c|c}
+        \toprule[2pt]
+        \textbf{Number of Line} & \textbf{Total Tokens} & \textbf{Vocabulary Size}  & \textbf{Average Sequence Length}\\
+        \toprule[1pt]
+        306,522 & 84,955,239 & 2,047,760 & 277 \\
+        \toprule[2pt]
+    \end{tabular}
+    \caption{description of preprocessed corpus}
+    \label{tab:my_label}
+\end{table}
+
+\subsection{Word2vec}
+\textit{Word2vec} is one of most frequently used model in NLP domain. Since many research about source code embedding via using \textit{Word2vec} model, our deep learning based model will adopt the tokens vector table that generated by \textit{Word2vec} model, we use gensim \footnote{https://radimrehurek.com/gensim/}, an open source package including \textit{Word2vec} model. Talbe 4.4 show the trianing settings of Word2vec model.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c|c|c}
+        \toprule[2pt]
+        Dim Size & Window & min\_count & epochs \\
+        \toprule[1pt]
+        300 & 5 & 5 & 15 \\
+        \toprule[2pt]
+    \end{tabular}
+    \caption{Word2vec Pretraining Settings}
+    \label{tab:my_label}
+\end{table}
+
+
+\subsection{BERT}
+Since there no source code \textit{BERT} pretrained model aviliable, we pretrained small bert model for our experiments, Table 4.5 show the settings for our \textit{BERT} pretraining. 
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c|c|c}
+    \toprule[2pt]
+        Total Parameter & hidden layer & batch size & epoch \\
+    \toprule[1pt]
+         264,241,330 & 64 & 8 & 2 \\
+    \toprule[2pt]
+    \end{tabular}
+    \caption{BERT Pretraining Settings}
+    \label{tab:my_label}
+\end{table}
+Due to the limitation of time, the training configuration we select meet our training requirement. We open source tools \textit{BERT-pytorch} \footnote{https://github.com/codertimo/BERT-pytorch} to complete the pretraining task. We firstly construct \textit{BERT} style vocabulary and then use the vocabulary train our model. The training time took one day. 
+
+\section{Evaluatation Metrics}
+
+To evaluate the abality of defect prediction for SDP model, we adopt three metrics to measure their capability:
+%Unclear
+\begin{itemize}
+    \item \textbf{Precision} measure the ability that how well a model that can correct defect instance in all predicted defect label.
+    \item \textbf{Recall} measure the how well that defect instance can be predicted successfully.
+    \item \textbf{F1} balances the \textbf{Precision} and \textbf{Recall} when we need to take both into account.
+\end{itemize}
+Below description are the equations of there metrics.
+\begin{equation}
+    \textbf{Precision}=\frac{TP}{TP+FP}
+\end{equation}
+
+\begin{equation}
+    \textbf{Recall}=\frac{TP}{TP+FN}
+\end{equation}
+
+\begin{equation}
+    \textbf{F1}=\frac{2*Precision*Recall}{Precison+Recall}
+\end{equation}
+
+where \textit{TP}, \textit{FP} and \textit{FN} are  \textit{True Positive}, \textit{False Positive} and \textit{False Negative}, respectively. \textit{True Positive} is the number of predicted defective example whose true label is defect, \textit{FP} is number of predicted defective example whose true label is clean. \textit{False Negative} is the number of predicted clean example whose true label is defect.
+
+\section{Baseline metrics}
+We use two base metrics for experiments for traditional methods. 
+\begin{enumerate}
+    \item \textbf{Tokens}:We generate this token feature by transforming sequence tokens into sequence of index according to token vocabulary.
+    \item \textbf{Stats}:Statistical feature that directly from defect data described in section 4.1.
+\end{enumerate}
+
+\section{Baseline Methods}
+The following are the baseline methods we selected to compare with our \textit{BERT} based method.
+
+\begin{enumerate}
+    \item \textbf{TextCNN}: Deep learning method for text classification. In our experiments, we use three kind of filters whose size are 2,3 and 4, respectively. The number of every filter is 32.
+    \item \textbf{BiLSTM+ATT}:Widely applied deep learning method for text classification, we use sentence classification for our experiment.
+    \item \textbf{Tokens+LR}: We use \textbf{Tokens} feature to train logistics regression model. 
+    \item \textbf{Stats+LR}:We use \textbf{Stats} feature to train logistics model.
+\end{enumerate}
+
+\section{Within-Project Defect Prediction}
+Within-Project Defect Prediction (WPDP) are the one form of SDP that conducted for individual project. WPDP is general evaluation strategy for many research \cite{}, in our dataset, each project contain several history version. Since WPDP require at least two history version,we filter those projects do not meet this requirement. We trained a model by using previous history versions and evaluate model using the latest version in the project dataset.  For those project with multi-version, we concatenate them into training set. We use the feature generated by our the pretrained model.
+
+\section{Cross-Project Defect Prediction}
+In SDP domain, the shortage of defect dataset is key point for the development of research, to relief this problem, Cross-Project Defect Prediction (CPDP) is another form to evaluate SDP model. CPDP train a model using a project dataset and then use the another project to evaluate the performance of the trained model, In our experiments, we have 10 projects, we first concatenate each history version dataset of a project into project dataset, when conducting the CPDP experiments, each project dataset is like to be the target project dataset, similarly, after we generate the project dataset, we concatenate the rest 9 projects dataset as training set for models. For different research question, then for each project, we generated pair dataset.
+
+\section{Parameters Setting}
+To investigate the most optimal number of hidden units, we conduct the experiment to find out the most proper number of hidden node for our model,we conduct the experiment to find out the most the most president of our methods. \\
+\textbf{TODO}
+
+\section{Experiment for RQ1}
+To verify whether data augmentation strategy can improve the performance of data, we adopted our data augmentation strategy to generate more instance for each project. Since our data augmentaion strategy is suitable for small dataset, we conduct WPDP experiment to verify whether our data augmentation can improve the performance of model. On the other hand, to many augmented data may not be able to learn the raw data semantics feature. So we need to find proper augmented times to ensure the maximum performance of models. In this experiment, we select the number range of augmentation are 2,4,8,16,32 and 32. To eliminate those project whose instance's amount are more than 1000 since we believe that data augmentation is more effective on small dataset. In this experiment, we conduct WPDP experiment for our research, since the volume of training data is much larger than that of WPDP.
+\section{Experiment for RQ2:Performance comparsion}
+To compare with other baseline methods, we conduct the experiment on both WPDP and CPDP we use the F1 score, precision and recall as metrics to measure the performance.
+\section{Experiment for RQ3:Embedding comparsion}
+To verify which kind of embedding method is effective, we compare with our pretrained mini-version \textit{BERT} model and \textit{Word2vec}, we conduct both WPDP and CPDP for \textbf{TextCNN} and \textbf{BiLSTM+ATT}. 
+\section{Experiment for RQ4:Data Preprocessing Method comparsion}
+\textbf{TODO}
+
+
+
+

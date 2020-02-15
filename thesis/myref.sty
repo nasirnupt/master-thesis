@@ -1,0 +1,16 @@
+\ProvidesPackage{myref}
+
+\newcommand* \chaplab[1]{\label{chap:#1}}%     
+\newcommand* \chapref[1]{\prechaptername~\ref{chap:#1}~\postchaptername}% 章の参照
+\newcommand* \seclab[1]{\label{sec:#1}}%       
+\newcommand* \secref[1]{Section~\ref{sec:#1}}%      
+\newcommand* \figlab[1]{\label{fig:#1}}%       
+\newcommand* \figref[1]{\figurename~\ref{fig:#1}}%  
+\newcommand* \tablab[1]{\label{tab:#1}}%       
+\newcommand* \tabref[1]{Table~\ref{tab:#1}}%    
+\newcommand* \applab[1]{\label{app:#1}}%       
+\newcommand* \appref[1]{Appendix~\ref{app:#1}}%    
+\newcommand* \algolab[1]{\label{alg:#1}}%       
+\newcommand* \algoref[1]{Algorithm~\ref{alg:#1}}%    
+\newcommand* \equlab[1]{\label{alg:#1}}%    
+\newcommand* \equref[1]{Equation~\ref{alg:#1}}%    

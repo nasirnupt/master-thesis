@@ -1,0 +1,34 @@
+\documentclass{article}
+\begin{document}
+\section{Background}
+Software defect prediction(SDP) is kind of technique for software checking and the debugging. It will cost much for a software maintenance at later period. Since,By using SDP, the developers can focus on the modules that most likely have bug.\\
+\\
+Recent technique mainly base on machine learning model to predict the whether a file or a bug have bug or not. this method mainly make use of history data, then construct a series of metrics to train the model, so that it can be utilized to predict the buggy of other modules.\\
+
+Since building a effective metric is essential in a machine learning model, many researcher have proposed their concept and idea to construct the metric of SDP model, in the early research, Line Of Code (LOC)\cite{} was employed to measure if file that have bug or not. However, such simple metric ignores the structure of code. Halstead proposed a software complexity metric by counting the occurrence of operator and operand in the source code \cite{}. McCabe also raise concept of cyclomatic complexity that possibility of causing bugs increase as the program becomes more complex\cite{}. CK metrics suite measures the software complexity by considering its inheritance, coupling, and cohesion. MOOD metrics are also be proved as effective in SDP. \\
+
+As for machine learning model, many classical machine learning model are adopted for SDP. such as logistics regression (LR), support vector machine (SVM),decision tree (DT), random forest (RF), Adaboost, and naive bayes (NB). Moreover, ensemble learning strategy such as voting, stacking and averaging are perform well in SDP. 
+
+However, traditional machine learning base model may have some problem:
+\begin{itemize}
+    \item Need to construct metric manully.
+    \item Do not consider the semantics of code.
+\end{itemize}
+Traditional machine learning model need to extract features manully to construct a machine learning model. Thereby, the quality of feature is directly impact the performance of machine learning model. Besides, traditional metrics did not consider the semantics of programs. Take Figure 1 as example, if \texttt{pop()} function execute first, the program will occur error. However, traditional metric did not consider this problem. To solve this problem. Wong et.al \cite{} extract abstract syntax tree (AST) and select specific node from AST to present the code semantics, then they leverage word embedding technique to embed word into vectors and Finally employed deep belief network (DBN) \cite{} to extract feature from the embeded AST nodes and achieved better performance than traditional models. Song et.al also adopted Convolutional Neural Networks (CNN) to extract the features of programs, which also perform better than traditional machine learning model. Tree-base LSTM was employed to solve different level semantics of programs.\\
+
+Undoubly, such deep learning based model can effective improve the performance of SDP, however, they still have some problem.
+\begin{itemize}
+    \item Limited by training data, the token may not be trained sufficiently.
+    \item Identical tokens may have different meanings under different context.
+    \item Tokens in a project may not appear in other projects. 
+    \item Not all tokens contain same weight information.
+\end{itemize}
+Limited by existing defect data set, the instance in the largest project is no more than 2000, thereby the tokens may not be trained sufficiently in token embedding phrase. To solve this problem, we utilize large corpus open source Java projects as pre-trained models for SDP, which can obtain large amount of tokens vocabulary. Figure 3 \cite{} show example of \texttt{util} function in two different package, they share the same name, but have different function. Motivated by the similar problems in natural language processing domain, we leverage BERT, a pre-train model to solve this problem, it can learn different semantics in different context for a token. Besides, tokens in different projects may occur reduce the performance of models. Take Figure 2 \cite{} as example, if \texttt{pop} contains important information in test set, but do not exist in training set, then the token will be treat as \texttt{unkown} token, this means that model have weak ability to learn semantics in different word, to solve this problem. Still, take Figure 2 as example, we intutionly notice that \texttt{pop} and \texttt{push} have relatively more information comparing to other tokens. Motivated by attention mechanism in NLP field \cite{}, we apply it in SDP. \\
+
+Base on the problem that given above, we raise several research questions to validate the effectiveness of our model.\\
+\textbf{RQ1: Can our model outperform traditional machine learning model?}\\
+\textbf{RQ2: Can our model ourperform non-pretrained deep learning base model}\\
+To validate whether our model perform better than traditional machine learning model. \\
+\textbf{RQ3: Is BERT model perform bert than word2vec model?}\\
+\textbf{RQ4: Can attention mechanism reflect importance tokens in a sequence successfully?}\\
+\end{document}

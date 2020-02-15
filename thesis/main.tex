@@ -1,0 +1,209 @@
+\documentclass[a4paper,11pt,oneside,openany]{report}
+%
+%%%%%%%%%%%%% DO NOT DELETE BELOW %%%%%%%%%%%%%%%%
+\makeatletter
+\def\clap#1{\hbox to 0pt{\hss #1\hss}}%
+\def\ligne#1{%
+\hbox to \hsize{%
+\vbox{\centering #1}}}%
+\def\haut#1#2#3{%
+\hbox to \hsize{%
+\rlap{\vtop{\raggedright #1}}%
+\hss
+\clap{\vtop{\centering #2}}%
+\hss
+\llap{\vtop{\raggedleft #3}}}}%
+\def\bas#1#2#3{%
+\hbox to \hsize{%
+\rlap{\vbox{\raggedright #1}}%
+\hss
+\clap{\vbox{\centering #2}}%
+\hss
+\llap{\vbox{\raggedleft #3}}}}%
+\def\svb#1#2{%
+  \hbox to \hsize{%
+    \hbox to 0.5\hsize{\hfil #1:}%
+    \hbox to 0.4\hsize{~#2 \hfil}}}%
+\def\maketitle{%
+\thispagestyle{empty}\vbox to \vsize{%
+\haut{}{\LARGE \textbf{\@thesistype}}{}
+\vfill
+\ligne{\Huge \@title}
+\vspace{1cm}
+\ligne{\LARGE \@author}
+\bigskip
+\ligne{\Large \@studentid}
+\vfill
+\haut{}{\Large \@affiliation}{}
+\vfill
+\ligne{\Large \@supervisor}
+\ifx\@dsupervisor\@empty\else
+  \medskip \svb{\Large \@dsupervisorname}{\Large \@dsupervisor}
+\fi
+\vfill
+\bas{}{\large \@date}{}
+}%
+\cleardoublepage
+}
+\def\date#1{\def\@date{#1}}
+\def\author#1{\def\@author{#1}}
+\def\studentid#1{\def\@studentid{#1}}
+\def\title#1{\def\@title{#1}}
+\def\supervisor#1{\def\@supervisor{#1}}
+\def\dsupervisor#1{\def\@dsupervisor{#1}}
+\def\supervisorname#1{\def\@supervisorname{#1}}
+\def\dsupervisorname#1{\def\@dsupervisorname{#1}}
+\def\affiliation#1{\def\@affiliation{#1}}
+\def\thesistype#1{\def\@thesistype{#1}}
+\title{}
+\author{}
+\date{}
+\supervisor{}
+\dsupervisor{}
+\supervisorname{}
+\dsupervisorname{}
+\affiliation{}
+\thesistype{}
+\makeatother
+%
+%
+%
+\pagestyle{plain}
+\supervisorname{Supervisor}
+\dsupervisorname{Deputy Supervisor}
+\renewcommand{\abstractname}{\Large Abstract}
+\renewcommand{\bibname}{References}
+\usepackage[left=30mm, right=30mm, top=25mm, bottom=25mm]{geometry}
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+%
+%
+%%%%%%%%%%%%% DO NOT DELETE ABOVE %%%%%%%%%%%%%%%%
+%
+%
+% User Defined Packages
+%
+\usepackage{amsmath,amssymb}
+\usepackage{courier}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{verbatim}
+\usepackage{wrapfig}
+\usepackage{ascmac}
+\usepackage{myref}
+\usepackage[sort]{cite}
+
+% Use these packages to beautify latex template
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+\usepackage[expert]{mathdesign}
+\usepackage{booktabs}
+\usepackage{ltablex}
+\usepackage{siunitx}
+\usepackage{threeparttable}
+
+\usepackage{fancyhdr}
+\usepackage{exsheets}
+\usepackage[framemethod=TikZ]{mdframed}
+% for code
+\usepackage[utf8]{inputenc}
+
+\usepackage{listings}
+\usepackage{color}
+\usepackage{booktabs}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\mdfsetup{
+	roundcorner=5pt
+}
+
+\lstset{style=mystyle}
+
+\newcommand{\resultRelated}[1]{#1}
+
+\fancyhf{}
+\fancyhead[L]{\slshape \leftmark}
+\fancyfoot[C]{\thepage}
+\pagestyle{fancy}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+\thesistype{Master's Thesis}
+%\thesistype{Doctoral Dissertation}
+\title{Deep Learning based Semantics Model for Software Defect Prediction}
+\author{Jidong Li}
+\studentid{17M38124}
+\affiliation{
+  Graduate Major in Computer Science\\
+  School of Computing\\
+  Tokyo Institute of Technology
+}
+\date{January, 2020}
+\supervisor{Supervisor: Takashi Kobayashi}
+%\dsupervisor{Jiro Kogaku}
+%
+\begin{document}
+%
+%
+\maketitle
+%
+%
+%
+%
+\tableofcontents
+\listoffigures
+\listoftables
+%
+%
+\clearpage
+\setcounter{page}{1}
+\input{1-introduction.tex}
+\input{2-background.tex}
+\input{3-methodology.tex}
+\input{4-experimental-setup.tex}
+\input{5.1-results.tex}
+\input{6-discussion.tex}
+\input{7-conclusion.tex}
+%
+%
+%
+%
+\chapter*{Acknowledgment}
+\addcontentsline{toc}{chapter}{Acknowledgment}
+
+%
+%
+%
+%
+%
+\addcontentsline{toc}{chapter}{\bibname}
+\bibliographystyle{plain}
+\bibliography{./bibtex/cite}
+%
+%
+\end{document}

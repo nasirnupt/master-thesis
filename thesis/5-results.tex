@@ -1,0 +1,44 @@
+\chapter{Results}
+\section{RQ1:Can Data Augmentation Improve the Performance of Model}
+To answer this question, we conducted the experiment RQ1,we Table 5.1 show the F1 score  we obtain from the experiment. the average 
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c}
+    \toprule[2pt]
+         Project & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+    \toprule[1pt]
+         xerces & 0.37 & 0.35 & 0.27 & 0.37 & 0.38 & 0.37 & 0.32 & \textbf{0.39} & 0.29 & \textbf{0.39} \\
+         synapse & 0.27 & 0.28 & 0.46 & 0.48 & \textbf{0.50} & 0.43 & 0.38 & 0.38 & 0.34 & 0.46 \\
+         xalan & 0.73 & 0.71 & \textbf{0.77} & 0.69 & 0.71 & 0.71 & 0.72 & 0.75 & 0.73 &  0.67 \\
+         camel & 0.44 & 0.47 & 0.5 & \textbf{0.53} & 0.41 & 0.47 & 0.5 & 0.49 & 0.49 &  0.51 \\
+         ivy & 0.2 & \textbf{0.22} & 0.19 & 0.19 & 0.19 & 0.18 & 0.19 & 0.2 & 0.2 & 0.19 \\
+         velocity & 0.52 & 0.55 & 0.56 & \textbf{0.57} & 0.55 & 0.56 & 0.53 & 0.56 & 0.56 & 0.56 \\
+         ant & 0.39 & 0.33 & 0.39 & \textbf{0.47} & 0.37 & 0.38 & 0.38 & 0.39 & 0.35 & 0.34 \\
+         poi & 0.39 & 0.26 & 0.35 & \textbf{0.44} & 0.24 & 0.33 & 0.26 & 0.3 & 0.28 & 0.27 \\
+         lucene & 0.41 & 0.64 & 0.7 & 0.68 & \textbf{0.71} & 0.67 & 0.68 & 0.68 & 0.66 & 0.66 \\
+         jedit & 0.08 & 0.11 & 0.09 & 0.08 & 0.09 & 0.11 & 0.08 & 0.06 & 0.08 & 0.09 \\
+         average & 0.38 & 0.392 & 0.428 & \textbf{0.45} & 0.415 & 0.421 & 0.404 & 0.42 & 0.398 & 0.414 \\
+         \toprule[2pt]
+    \end{tabular}
+    \caption{Caption}
+    \label{tab:my_label}
+\end{table}
+
+\section{RQ4: Which Tokens}
+
+
+\section{RQ3}
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+        \toprule[2pt]
+        \multirow{2}{*}{Project} & \multicolumn{3}{|c}{BERT+BAMA} & \multicolumn{3}{|c}{TextCNN} & \multicolumn{3}{|c}{BiLSTM+ATT} & \multicolumn{3}{|c}{Tokens+LR} & \multicolumn{3}{|c}{Stat+LR} \\
+        \toprule[1pt]
+        \cline{2-3} & F1 & P & R & F1 & P & R & F1 & P & R & F1 & P & R & F1 & P & R \\
+        \toprule[2pt]
+        xecers & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & \\
+    \end{tabular}
+    \caption{Caption}
+    \label{tab:my_label}
+\end{table}
