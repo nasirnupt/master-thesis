@@ -232,7 +232,7 @@ drop_list = ['camel-1.0.csv', 'ivy-2.0.csv', 'poi-3.0.csv', 'lucene-2.0.csv', 'j
 result = {}
 
 # solo data generation
-def solo_data(path,mode="tokens"):
+def solo_data(path,mode="toks"):
     data, project_name, version = data_read(path)
     data["path"] = data["name.1"].apply(lambda x:project_parsing(project_name, version,x))
     if mode == "toks":
@@ -263,7 +263,7 @@ def data_merge(name_list, dict):
 
 
 # generate the data that for projects data
-def project_data_generation(mode="tokens"):
+def project_data_generation(mode="toks"):
     """
     the generated data of each project will be in such form:
     {project_name:

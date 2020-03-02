@@ -69,7 +69,7 @@ def synonym_replacement(words, n):
 
     return new_words
 from gensim.models import Word2Vec
-model = Word2Vec.load("../pretrained_models/new_word2vec/word2vec.model")
+model = Word2Vec.load("./pretrained_models/word2vec/word2vec.model")
 def get_synonyms(word):
     synonyms = set()
     vector = model.wv[word]
